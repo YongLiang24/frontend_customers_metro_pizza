@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import MenuTabs from '../components/MenuTabs';
-import TopHeader from '../components/TopHeader';
 
 class ItemCartContainer extends Component{
 

@@ -1,6 +1,5 @@
 #myHeader {
  background-color: teal;
- overflow: hidden;
 }
 
 #myBody{
@@ -43,4 +42,18 @@
 }
 #modalButtons{
   text-align: center;
+}
+.mainPageDiv{
+  text-align: center;
+}
+#RevealContents{
+  text-align: center;
+  display: inline-block;
+}
+#iconImage{
+  cursor: pointer;
+
+}
+#iconImage:hover{
+  opacity: 0.8;
 }

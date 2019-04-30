@@ -5,6 +5,7 @@ import VideoBackground from './VideoBackground';
 import { Button, Card} from 'semantic-ui-react';
 import ItemCard from './ItemCard';
 import OrderCard from './OrderCard';
+import RevealPizza from './RevealPizza'
 
 class MenuTabs extends Component{
   state ={
@@ -27,6 +28,7 @@ class MenuTabs extends Component{
   }
 //Append items to arrays based on the tab selected
   handleFilteredItems = (ev)=>{
+    console.log("check ev name:", ev.target.name)
     switch(ev.target.name){
       case 'wingButton':
         let wingItems = this.filterItems('Wings')
@@ -47,8 +49,12 @@ class MenuTabs extends Component{
           return totalPrice =(parseFloat(totalPrice) + parseFloat(item.price))})
         this.setState({totalPrice: totalPrice.toFixed(2)})
         break;
+      case 'homePage':
+        this.setState({isMenuItem: ev.target.name})
+        break;
       default:
-        break;}
+        break;
+      }
     }
 //this method adds items to cart when button is clicked.
   handleAddToCart =(ev)=>{
@@ -90,7 +96,7 @@ class MenuTabs extends Component{
     if(this.state.isMenuItem === "wingButton"){
       return (
         <div>
-          <TopHeader /> <VideoBackground />
+          <TopHeader handleFilteredItems={this.handleFilteredItems}/> <VideoBackground />
           <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
           <Card.Group centered >
             {this.state.wingMenuItems.map(wing =>{
@@ -102,7 +108,7 @@ class MenuTabs extends Component{
       else if(this.state.isMenuItem === "beverageButton"){
         return(
           <div>
-            <TopHeader />  <VideoBackground />
+            <TopHeader handleFilteredItems={this.handleFilteredItems}/>  <VideoBackground />
             <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
             <Card.Group centered >
               {this.state.beverageMenuItems.map(beverage =>{
@@ -113,7 +119,7 @@ class MenuTabs extends Component{
       else if(this.state.isMenuItem === "pizzaButton"){
         return(
           <div>
-            <TopHeader /> <VideoBackground />
+            <TopHeader handleFilteredItems={this.handleFilteredItems}/> <VideoBackground />
             <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
             <Card.Group centered >
               {this.state.pizzaMenuItems.map(pizza =>{
@@ -124,7 +130,7 @@ class MenuTabs extends Component{
       else if(this.state.isMenuItem === "cartButton"){
         return(
           <div>
-            <TopHeader /> <VideoBackground />
+            <TopHeader handleFilteredItems={this.handleFilteredItems}/> <VideoBackground />
             <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
             <Card.Group centered>  <Card id='cartCard'>
               {this.state.cartListItems.map((item, index)=>{
@@ -138,14 +144,25 @@ class MenuTabs extends Component{
                     <Button basic color='green' type='submit'>Place Order</Button>
                   </div>  </form>  </Card.Content> </Card>
             </Card.Group>  </div>)}
+        else if(this.state.isMenuItem === "homePage"){
+          return(
+            <div className="mainPageDiv">
+              <TopHeader handleFilteredItems={this.handleFilteredItems}/>
+              <VideoBackground />
+              <MenuButtons handleFilteredItems={this.handleFilteredItems}/>
+              <br/><br/><br/><br/><br/><br/>
+              <RevealPizza />
+            </div>
+          )
+        }
         else{
           return(
-            <div>
+            <div className="mainPageDiv">
               <TopHeader />
               <VideoBackground />
               <MenuButtons handleFilteredItems={this.handleFilteredItems}/>
-
-              
+              <br/><br/><br/><br/><br/><br/>
+              <RevealPizza />
             </div>
           )}
         }

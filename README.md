@@ -1,3 +1,7 @@
+Backend API Repo: https://github.com/YongLiang24/backend_metro_pizza
+
+Frontend Item Management: https://github.com/YongLiang24/frontend_admin_metro_pizza
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

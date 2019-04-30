@@ -2,9 +2,9 @@ import React from 'react';
 import { Button, Card, Image, Header, Modal} from 'semantic-ui-react';
 const ItemCard = (props) => (
   <div>
-      <Card.Content>
+      <Card.Content id="cardContent">
         <Card.Header>{props.name}</Card.Header>
-        <Image  size='small' src={props.img_url}/>
+        <Image  size='small' src={props.img_url} id='itemImages'/>
         <Card.Meta>$ {props.price}</Card.Meta>
         <Card.Description>
           {props.description}
@@ -15,7 +15,7 @@ const ItemCard = (props) => (
           <Button basic color='teal' onClick={props.handleAddToCart} value={props.itemName}>
             Add to Cart
           </Button>
-          <Modal trigger={<Button>Details</Button>} size='large'>
+          <Modal trigger={<Button>Details</Button>} size='large' id="modalItem">
             <Modal.Header>{props.name}</Modal.Header>
             <Modal.Content image>
               <Image wrapped size='medium' src={props.img_url} />
@@ -25,18 +25,15 @@ const ItemCard = (props) => (
               </Modal.Description>
 
             </Modal.Content>
-                      <Modal.Actions>
+                      <Modal.Actions id="modalButtons">
                     <Button color='black' onClick={props.close}>
-                      Nope
-                    </Button>
-                    <Button color='black' onClick={props.close}>
-                      Nope
+                      Back
                     </Button>
                     <Button
                       positive
                       icon='checkmark'
                       labelPosition='right'
-                      content="Yep, that's me"
+                      content="Add to Cart"
                       onClick={props.close}
                     />
                   </Modal.Actions>

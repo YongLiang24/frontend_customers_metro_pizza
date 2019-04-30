@@ -1,5 +1,6 @@
 #myHeader {
  background-color: teal;
+ overflow: hidden;
 }
 
 #myBody{
@@ -27,4 +28,19 @@
 #cartCard{
   text-align: center;
   width: 60%;
+}
+#itemImages{
+  height: 125px;
+}
+#cardContent{
+  text-align: center;
+}
+#cartInput{
+  font-size: 1.3em;
+}
+#modalItem{
+  text-align: center;
+}
+#modalButtons{
+  text-align: center;
 }

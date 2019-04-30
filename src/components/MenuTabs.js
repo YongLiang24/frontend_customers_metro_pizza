@@ -10,7 +10,7 @@ class MenuTabs extends Component{
 
   state ={
     allMenuItems: [], pizzaMenuItems:[], wingMenuItems: [], beverageMenuItems:[],
-    isMenuItem: '', cartListItems: [], itemQuantity : 1, totalPrice:0
+    isMenuItem: '', cartListItems: [], totalPrice:0
   }
 
   componentDidMount(){
@@ -52,7 +52,7 @@ class MenuTabs extends Component{
         let totalPrice = 0;
         this.state.cartListItems.map(item=>{
           return totalPrice =(parseFloat(totalPrice) + parseFloat(item.price))})
-        this.setState({totalPrice: totalPrice})
+        this.setState({totalPrice: totalPrice.toFixed(2)})
         break;
 
       default:
@@ -72,33 +72,24 @@ class MenuTabs extends Component{
       img_url: selectedItem.img_url,
       id: selectedItem.id
     }
-    let updatedCartItem = this.state.cartListItems
-
-
-
+    let updatedCartItem = this.state.cartListItems.slice()
+    updatedCartItem.push(cartObject)
     this.setState({
       cartListItems: updatedCartItem
     })
-
-
   }
-
-
 
   render(){
     if(this.state.isMenuItem === "wingButton"){
       return (
         <div>
           <TopHeader /> <VideoBackground />
-          <MenuButtons handleFilteredItems={this.handleFilteredItems}/>
-          <br/><br/>
+          <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
           <Card.Group centered >
             {this.state.wingMenuItems.map(wing =>{
               return  <Card key={wing.id}> <ItemCard id={wing.id} name={wing.name} price={wing.price} img_url={wing.img_url} description={wing.description}
                 handleAddToCart={this.handleAddToCart} itemName={wing.name}/>
-                <button onClick={this.handleAddToCart} value={wing.name}>dup check</button>
-              </Card>
-            })}
+              </Card>  })}
           </Card.Group>
         </div>
           )}
@@ -106,27 +97,22 @@ class MenuTabs extends Component{
         return(
           <div>
             <TopHeader />  <VideoBackground />
-            <MenuButtons handleFilteredItems={this.handleFilteredItems}/>
-            <br/><br/>
+            <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
             <Card.Group centered >
               {this.state.beverageMenuItems.map(beverage =>{
                 return  <Card key={beverage.id}> <ItemCard id={beverage.id} name={beverage.name} price={beverage.price} img_url={beverage.img_url} description={beverage.description} handleAddToCart={this.handleAddToCart} itemName={beverage.name}/>
-                </Card>
-              })}
+                </Card>  })}
             </Card.Group>
-          </div>
-              )}
+          </div>  )}
       else if(this.state.isMenuItem === "pizzaButton"){
         return(
           <div>
             <TopHeader /> <VideoBackground />
-            <MenuButtons handleFilteredItems={this.handleFilteredItems}/>
-            <br/><br/>
+            <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
             <Card.Group centered >
               {this.state.pizzaMenuItems.map(pizza =>{
                 return  <Card key={pizza.id}> <ItemCard id={pizza.id} name={pizza.name} price={pizza.price} img_url={pizza.img_url} description={pizza.description} handleAddToCart={this.handleAddToCart} itemName={pizza.name}/>
-                </Card>
-              })}
+                </Card>  })}
             </Card.Group>
           </div>
               )}
@@ -140,8 +126,10 @@ class MenuTabs extends Component{
                 <Card id='cartCard'>
                   {this.state.cartListItems.map((item, index)=>{
                     return <OrderCard key={index} name={item.name} price={item.price} img_url={item.img_url}/>})}
-                  <Card.Content extra>
-                    total price: ${this.state.totalPrice}<br/><br/>
+                  <Card.Content id='cartInput'>
+                    Name: <input type='text'/>
+                    Phone#: <input type='number'/><br/><br/>
+                    Total: ${this.state.totalPrice}<br/><br/>
                     <div className='ui one buttons'>
                       <Button basic color='green'>
                         Place Order
@@ -150,13 +138,11 @@ class MenuTabs extends Component{
                   </Card.Content>
                 </Card>
               </Card.Group>
-            </div>
-                )}
+            </div>)}
         else{
           return(
             <div>
               <TopHeader /> <MenuButtons handleFilteredItems={this.handleFilteredItems}/> <VideoBackground />
-
             </div>
           )}
         }

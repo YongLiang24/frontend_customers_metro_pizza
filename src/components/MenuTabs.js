@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import MenuButtons from './MenuButtons';
 import TopHeader from './TopHeader';
 import VideoBackground from './VideoBackground';
-import { Button, Card} from 'semantic-ui-react';
+import { Button, Card, TextArea} from 'semantic-ui-react';
 import ItemCard from './ItemCard';
 import OrderCard from './OrderCard';
 import RevealPizza from './RevealPizza'
@@ -11,7 +11,7 @@ class MenuTabs extends Component{
   state ={
     allMenuItems: [], pizzaMenuItems:[], wingMenuItems: [], beverageMenuItems:[],
     isMenuItem: '', cartListItems: [], totalPrice:0, customerName: '',
-    customerPhone: '', modalOpen: false
+    customerPhone: '', modalOpen: false, specialInstruction: ''
   }
 
   componentDidMount(){
@@ -28,7 +28,6 @@ class MenuTabs extends Component{
   }
 //Append items to arrays based on the tab selected
   handleFilteredItems = (ev)=>{
-    console.log("check ev name:", ev.target.name)
     switch(ev.target.name){
       case 'wingButton':
         let wingItems = this.filterItems('Wings')
@@ -65,7 +64,7 @@ class MenuTabs extends Component{
       img_url: selectedItem.img_url,id: selectedItem.id}
     let updatedCartItem = this.state.cartListItems.slice()
     updatedCartItem.push(cartObject)
-    this.setState({cartListItems: updatedCartItem})
+    this.setState({cartListItems: updatedCartItem, modalOpen:false})
   }
 
   handleRemoveItem = (ev)=>{
@@ -85,8 +84,30 @@ class MenuTabs extends Component{
 
   handleCartForm =(ev)=>{
     ev.preventDefault()
-    console.log('form',ev.target.customerName.value)
-    console.log('form',ev.target.customerPhone.value)
+
+    const currentTime = new Date().toLocaleTimeString()
+    const orderObjects= {
+      Order_Time: currentTime,
+      Customer_Name: ev.target.customerName.value,
+      Customer_Phone: ev.target.customerPhone.value,
+      Special_Instruction: ev.target.specialInstruction.value,
+      Total_Price: '$' + this.state.totalPrice,
+
+    }
+    const order_lists = this.state.cartListItems
+    order_lists.push(orderObjects)
+    // console.log("order_lists", order_lists)
+    // console.log("order_lists JsonStringified", JSON.stringify({order_lists} ))
+    fetch('http://localhost:3000/api/v1/orders',{
+      method: 'POST',
+      headers:{'Content-Type': 'application/json',
+        Accept: 'application/json'},
+        body: JSON.stringify({order_lists} )
+    })
+    .then(resp => resp.json())
+    .then(json=>{
+      console.log(json)
+    })
   }
 
   handleModalOpen = () => this.setState({ modalOpen: true })
@@ -100,7 +121,7 @@ class MenuTabs extends Component{
           <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
           <Card.Group centered >
             {this.state.wingMenuItems.map(wing =>{
-              return  <Card key={wing.id}>
+              return  <Card key={wing.id} className="outterCard">
                 <ItemCard id={wing.id} name={wing.name} price={wing.price} img_url={wing.img_url} description={wing.description}
                 handleAddToCart={this.handleAddToCart} itemName={wing.name} modalOpen={this.state.modalOpen} handleModalOpen={this.handleModalOpen} handleModalClose={this.handleModalClose}/>
               </Card>})}
@@ -112,7 +133,7 @@ class MenuTabs extends Component{
             <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
             <Card.Group centered >
               {this.state.beverageMenuItems.map(beverage =>{
-                return  <Card key={beverage.id}>
+                return  <Card key={beverage.id} className="outterCard">
                   <ItemCard id={beverage.id} name={beverage.name} price={beverage.price} img_url={beverage.img_url} description={beverage.description} handleAddToCart={this.handleAddToCart} itemName={beverage.name} modalOpen={this.state.modalOpen} handleModalOpen={this.handleModalOpen} handleModalClose={this.handleModalClose}/>
                 </Card>})}
             </Card.Group>  </div>  )}
@@ -123,7 +144,7 @@ class MenuTabs extends Component{
             <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
             <Card.Group centered >
               {this.state.pizzaMenuItems.map(pizza =>{
-                return  <Card key={pizza.id}>
+                return  <Card key={pizza.id} className="outterCard">
                   <ItemCard id={pizza.id} name={pizza.name} price={pizza.price} img_url={pizza.img_url} description={pizza.description} handleAddToCart={this.handleAddToCart} itemName={pizza.name} modalOpen={this.state.modalOpen} handleModalOpen={this.handleModalOpen} handleModalClose={this.handleModalClose}/>
                 </Card>})}
             </Card.Group>  </div>  )}
@@ -132,18 +153,21 @@ class MenuTabs extends Component{
           <div>
             <TopHeader handleFilteredItems={this.handleFilteredItems}/> <VideoBackground />
             <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
-            <Card.Group centered>  <Card id='cartCard'>
-              {this.state.cartListItems.map((item, index)=>{
-                return <OrderCard key={index} name={item.name} price={item.price} img_url={item.img_url} handleRemoveItem={this.handleRemoveItem} index={index}/>})}
-              <Card.Content id='cartInput'>
-                <form onSubmit={this.handleCartForm}>
+            <form onSubmit={this.handleCartForm}>
+              <Card.Group centered>  <Card id='cartCard'>
+                {this.state.cartListItems.map((item, index)=>{
+                  return <OrderCard key={index} itemName={item.name} price={item.price} img_url={item.img_url} handleRemoveItem={this.handleRemoveItem} index={index}/>})}
+                <Card.Content id='cartInput'>
+                  <strong>Special Instructions:</strong><br/>
+                  <TextArea name="specialInstruction"
+                    value={this.state.specialInstruction} onChange={this.handleCartInput}/> <br/>
                   Name: <input type='text' required onChange={this.handleCartInput} name='customerName' value={this.state.customerName}/>
                   Phone#:<input type='number' required onChange={this.handleCartInput} name='customerPhone' value={this.state.customerPhone}/>
                   <br/><br/>Total: ${this.state.totalPrice}<br/><br/>
                   <div className='ui one buttons'>
                     <Button basic color='green' type='submit'>Place Order</Button>
-                  </div>  </form>  </Card.Content> </Card>
-            </Card.Group>  </div>)}
+                  </div>    </Card.Content> </Card>
+              </Card.Group> </form> </div>)}
         else if(this.state.isMenuItem === "homePage"){
           return(
             <div className="mainPageDiv">
@@ -151,7 +175,7 @@ class MenuTabs extends Component{
               <VideoBackground />
               <MenuButtons handleFilteredItems={this.handleFilteredItems}/>
               <br/><br/><br/><br/><br/><br/>
-              <RevealPizza />
+              <RevealPizza handleFilteredItems={this.handleFilteredItems}/>
             </div>
           )
         }
@@ -162,7 +186,7 @@ class MenuTabs extends Component{
               <VideoBackground />
               <MenuButtons handleFilteredItems={this.handleFilteredItems}/>
               <br/><br/><br/><br/><br/><br/>
-              <RevealPizza />
+              <RevealPizza handleFilteredItems={this.handleFilteredItems}/>
             </div>
           )}
         }

@@ -7,7 +7,7 @@ const TopHeader = (props) => (
     <div >
       <Header size='medium' textAlign='center' id='myHeader' >
         <Image src={elfIcon}  size='huge' onClick={props.handleFilteredItems} name='homePage'
-        id='iconImage'/>
+        className='iconImage'/>
         <p id='myTitle'>Metro Pizza</p>
       </Header>
     </div>

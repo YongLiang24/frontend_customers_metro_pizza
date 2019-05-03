@@ -15,18 +15,16 @@ class MenuTabs extends Component{
   }
 
   componentDidMount(){
-    fetch('http://localhost:3000/api/v1/menu_items')
+    fetch('https://backend-metro-pizza.herokuapp.com/api/v1/menu_items')
     .then(resp => resp.json())
     .then(json =>{this.setState({allMenuItems: json})})
   }
-//helper method to filter items based on selected tabs
   filterItems = (category) =>{
     let items = this.state.allMenuItems.filter(item =>{
       return item.category === category
     })
     return items
   }
-//Append items to arrays based on the tab selected
   handleFilteredItems = (ev)=>{
     switch(ev.target.name){
       case 'wingButton':
@@ -55,7 +53,6 @@ class MenuTabs extends Component{
         break;
       }
     }
-//this method adds items to cart when button is clicked.
   handleAddToCart =(ev)=>{
     const selectedItem = this.state.allMenuItems.find(item=>{
       return item.name === ev.target.value
@@ -68,10 +65,8 @@ class MenuTabs extends Component{
   }
 
   handleRemoveItem = (ev)=>{
-    //remove the item by index
     this.state.cartListItems.splice(ev.target.value, 1)
     this.setState((prevState) => ({cartListItems: prevState.cartListItems}))
-    //update the total price
     let totalPrice = 0;
     this.state.cartListItems.map(item=>{
       return totalPrice =(parseFloat(totalPrice) + parseFloat(item.price))})
@@ -84,30 +79,26 @@ class MenuTabs extends Component{
 
   handleCartForm =(ev)=>{
     ev.preventDefault()
-
-    const currentTime = new Date().toLocaleTimeString()
-    const orderObjects= {
-      Order_Time: currentTime,
-      Customer_Name: ev.target.customerName.value,
-      Customer_Phone: ev.target.customerPhone.value,
-      Special_Instruction: ev.target.specialInstruction.value,
-      Total_Price: '$' + this.state.totalPrice,
-
-    }
-    const order_lists = this.state.cartListItems
-    order_lists.push(orderObjects)
-    // console.log("order_lists", order_lists)
-    // console.log("order_lists JsonStringified", JSON.stringify({order_lists} ))
-    fetch('http://localhost:3000/api/v1/orders',{
+    if(this.state.cartListItems.length > 0){
+      const currentTime = new Date().toLocaleTimeString()
+      const Order_Time = currentTime;
+      const Customer_Name = ev.target.customerName.value;
+      const Customer_Phone =ev.target.customerPhone.value;
+      const Special_Instruction = ev.target.specialInstruction.value;
+      const Total_Price = this.state.totalPrice;
+      const order_lists = this.state.cartListItems;
+    fetch('https://backend-metro-pizza.herokuapp.com/api/v1/orders',{
       method: 'POST',
       headers:{'Content-Type': 'application/json',
         Accept: 'application/json'},
-        body: JSON.stringify({order_lists} )
+        body: JSON.stringify({Customer_Name, Customer_Phone, Special_Instruction, Total_Price, Order_Time, order_lists} )
     })
-    .then(resp => resp.json())
-    .then(json=>{
-      console.log(json)
-    })
+    this.setState({cartListItems: [], customerName: '', customerPhone: '', specialInstruction: ''})
+      alert("Thank you for your order")
+    }
+    else{
+      alert("please place some items in the cart.")
+    }
   }
 
   handleModalOpen = () => this.setState({ modalOpen: true })

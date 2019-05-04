@@ -7,7 +7,6 @@ const OrderCard = (props)=>{
       <Image  size='tiny' src={props.img_url} />
       <Card.Meta>${props.price}</Card.Meta>
       <Card.Description>
-
       </Card.Description>
       <button onClick={props.handleRemoveItem} value={props.index} className="ui negative basic button mini">Remove</button>
     </Card.Content>

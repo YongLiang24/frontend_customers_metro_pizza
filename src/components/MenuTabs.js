@@ -145,19 +145,20 @@ class MenuTabs extends Component{
             <TopHeader handleFilteredItems={this.handleFilteredItems}/> <VideoBackground />
             <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
             <form onSubmit={this.handleCartForm}>
-              <Card.Group centered>  <Card id='cartCard'>
-                {this.state.cartListItems.map((item, index)=>{
-                  return <OrderCard key={index} itemName={item.name} price={item.price} img_url={item.img_url} handleRemoveItem={this.handleRemoveItem} index={index}/>})}
-                <Card.Content id='cartInput'>
-                  <strong>Special Instructions:</strong><br/>
-                  <TextArea name="specialInstruction"
-                    value={this.state.specialInstruction} onChange={this.handleCartInput}/> <br/>
-                  Name: <input type='text' required onChange={this.handleCartInput} name='customerName' value={this.state.customerName}/>
-                  Phone#:<input type='number' required onChange={this.handleCartInput} name='customerPhone' value={this.state.customerPhone}/>
-                  <br/><br/>Total: ${this.state.totalPrice}<br/><br/>
-                  <div className='ui one buttons'>
-                    <Button basic color='green' type='submit'>Place Order</Button>
-                  </div>    </Card.Content> </Card>
+              <Card.Group centered >  <Card id='cartCard'>
+                <Card.Group centered >
+                  {this.state.cartListItems.map((item, index)=>{
+                    return <Card key={index} className="outterCard"><OrderCard key={index} itemName={item.name} price={item.price} img_url={item.img_url} handleRemoveItem={this.handleRemoveItem} index={index}/></Card>})} </Card.Group>
+                  <Card.Content id='cartInput'>
+                    <strong>Special Instructions:</strong><br/>
+                    <TextArea name="specialInstruction"
+                      value={this.state.specialInstruction} onChange={this.handleCartInput}/> <br/>
+                    Name: <input type='text' required onChange={this.handleCartInput} name='customerName' value={this.state.customerName}/>
+                    Phone#:<input type='number' required onChange={this.handleCartInput} name='customerPhone' value={this.state.customerPhone}/>
+                    <br/><br/>Total: ${this.state.totalPrice}<br/><br/>
+                    <div className='ui one buttons'>
+                      <Button basic color='green' type='submit'>Place Order</Button>
+                    </div>    </Card.Content> </Card>
               </Card.Group> </form> </div>)}
         else if(this.state.isMenuItem === "homePage"){
           return(

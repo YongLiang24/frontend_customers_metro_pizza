@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Image, TextArea} from 'semantic-ui-react';
+import { Card, Image} from 'semantic-ui-react';
 const OrderCard = (props)=>{
   return(
     <Card.Content>

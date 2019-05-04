@@ -2,17 +2,17 @@ import React from 'react';
 import { Button, Card, Image, Header, Modal} from 'semantic-ui-react';
 const ItemCard = (props) => (
   <div>
-    <Card.Content id="cardContent">
+    <Card.Content id="cardContent" centered="true">
       <Card.Header>{props.name}</Card.Header>
       <Image  size='small' src={props.img_url} id='itemImages'/>
       <Card.Meta>$ {props.price}</Card.Meta>
-      <Card.Description>{props.description}</Card.Description>
+      <Card.Description id="cardDescription">{props.description}</Card.Description>
     </Card.Content>
-    <Card.Content extra >
+    <Card.Content extra id='addCart_button'  centered="true">
       <div className='ui two buttons'>
-        <Button basic color='teal' onClick={props.handleAddToCart} value={props.itemName}>
+        <Button basic fluid color='teal' onClick={props.handleAddToCart} value={props.itemName}>
         Add to Cart  </Button>
-        <Modal trigger={<Button onClick={props.handleModalOpen}>Details</Button>} size='large' id="modalItem" open={props.modalOpen} onClose={props.handleModalClose}>
+        <Modal trigger={<Button fluid onClick={props.handleModalOpen}>Details</Button>} size='small' id="modalItem" open={props.modalOpen} onClose={props.handleModalClose}>
           <Modal.Header>{props.name}</Modal.Header>
           <Modal.Content image>
             <Image wrapped size='medium' src={props.img_url} />

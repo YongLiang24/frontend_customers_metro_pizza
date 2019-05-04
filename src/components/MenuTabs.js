@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import MenuButtons from './MenuButtons';
 import TopHeader from './TopHeader';
-import VideoBackground from './VideoBackground';
 import { Button, Card, TextArea} from 'semantic-ui-react';
 import ItemCard from './ItemCard';
 import OrderCard from './OrderCard';
@@ -55,7 +54,7 @@ class MenuTabs extends Component{
     }
   handleAddToCart =(ev)=>{
     const selectedItem = this.state.allMenuItems.find(item=>{
-      return item.name === ev.target.value
+      return item.id.toString() === ev.target.value
     })
     const cartObject ={name: selectedItem.name, price: selectedItem.price,
       img_url: selectedItem.img_url,id: selectedItem.id}
@@ -108,45 +107,46 @@ class MenuTabs extends Component{
     if(this.state.isMenuItem === "wingButton"){
       return (
         <div>
-          <TopHeader handleFilteredItems={this.handleFilteredItems}/> <VideoBackground />
+          <TopHeader handleFilteredItems={this.handleFilteredItems}/>
           <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
           <Card.Group centered >
             {this.state.wingMenuItems.map(wing =>{
               return  <Card key={wing.id} className="outterCard">
                 <ItemCard id={wing.id} name={wing.name} price={wing.price} img_url={wing.img_url} description={wing.description}
-                handleAddToCart={this.handleAddToCart} itemName={wing.name} modalOpen={this.state.modalOpen} handleModalOpen={this.handleModalOpen} handleModalClose={this.handleModalClose}/>
+                  handleAddToCart={this.handleAddToCart} itemName={wing.id} modalOpen={this.state.modalOpen} handleModalOpen={this.handleModalOpen} handleModalClose={this.handleModalClose}/>
               </Card>})}
           </Card.Group> </div> )}
       else if(this.state.isMenuItem === "beverageButton"){
         return(
           <div>
-            <TopHeader handleFilteredItems={this.handleFilteredItems}/>  <VideoBackground />
+            <TopHeader handleFilteredItems={this.handleFilteredItems}/>
             <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
             <Card.Group centered >
               {this.state.beverageMenuItems.map(beverage =>{
                 return  <Card key={beverage.id} className="outterCard">
-                  <ItemCard id={beverage.id} name={beverage.name} price={beverage.price} img_url={beverage.img_url} description={beverage.description} handleAddToCart={this.handleAddToCart} itemName={beverage.name} modalOpen={this.state.modalOpen} handleModalOpen={this.handleModalOpen} handleModalClose={this.handleModalClose}/>
+                  <ItemCard id={beverage.id} name={beverage.name} price={beverage.price} img_url={beverage.img_url} description={beverage.description} handleAddToCart={this.handleAddToCart} itemName={beverage.id} modalOpen={this.state.modalOpen} handleModalOpen={this.handleModalOpen} handleModalClose={this.handleModalClose}/>
                 </Card>})}
             </Card.Group>  </div>  )}
       else if(this.state.isMenuItem === "pizzaButton"){
         return(
           <div>
-            <TopHeader handleFilteredItems={this.handleFilteredItems}/> <VideoBackground />
+            <TopHeader handleFilteredItems={this.handleFilteredItems}/>
             <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
             <Card.Group centered >
               {this.state.pizzaMenuItems.map(pizza =>{
                 return  <Card key={pizza.id} className="outterCard">
-                  <ItemCard id={pizza.id} name={pizza.name} price={pizza.price} img_url={pizza.img_url} description={pizza.description} handleAddToCart={this.handleAddToCart} itemName={pizza.name} modalOpen={this.state.modalOpen} handleModalOpen={this.handleModalOpen} handleModalClose={this.handleModalClose}/>
+                  <ItemCard id={pizza.id} name={pizza.name} price={pizza.price} img_url={pizza.img_url} description={pizza.description} handleAddToCart={this.handleAddToCart} itemName={pizza.id} modalOpen={this.state.modalOpen} handleModalOpen={this.handleModalOpen} handleModalClose={this.handleModalClose}/>
                 </Card>})}
             </Card.Group>  </div>  )}
       else if(this.state.isMenuItem === "cartButton"){
         return(
           <div>
-            <TopHeader handleFilteredItems={this.handleFilteredItems}/> <VideoBackground />
+            <TopHeader handleFilteredItems={this.handleFilteredItems}/>
             <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
             <form onSubmit={this.handleCartForm}>
               <Card.Group centered >  <Card id='cartCard'>
-                <Card.Group centered >
+                <br/>
+                <Card.Group centered itemsPerRow={2}>
                   {this.state.cartListItems.map((item, index)=>{
                     return <Card key={index} className="outterCard"><OrderCard key={index} itemName={item.name} price={item.price} img_url={item.img_url} handleRemoveItem={this.handleRemoveItem} index={index}/></Card>})} </Card.Group>
                   <Card.Content id='cartInput'>
@@ -164,7 +164,6 @@ class MenuTabs extends Component{
           return(
             <div className="mainPageDiv">
               <TopHeader handleFilteredItems={this.handleFilteredItems}/>
-              <VideoBackground />
               <MenuButtons handleFilteredItems={this.handleFilteredItems}/>
               <br/><br/><br/><br/><br/><br/>
               <RevealPizza handleFilteredItems={this.handleFilteredItems}/>
@@ -175,7 +174,6 @@ class MenuTabs extends Component{
           return(
             <div className="mainPageDiv">
               <TopHeader />
-              <VideoBackground />
               <MenuButtons handleFilteredItems={this.handleFilteredItems}/>
               <br/><br/><br/><br/><br/><br/>
               <RevealPizza handleFilteredItems={this.handleFilteredItems}/>

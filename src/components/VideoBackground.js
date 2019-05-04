@@ -1,8 +1,8 @@
 import React from 'react';
 import Fire from '../images/Fire.mp4';
-const VideoBackground =()=>{
+const VideoBackground =(props)=>{
   return(
-    <video autoPlay={true} muted loop={true} className='video-background' playsinline>
+    <video autoPlay={true} muted loop={true} className='video-background' playsInline>
       <source src={Fire} />
     </video>
   )

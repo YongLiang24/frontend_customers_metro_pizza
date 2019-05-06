@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import MenuButtons from './MenuButtons';
 import TopHeader from './TopHeader';
-import { Button, Card, TextArea, Form, Input} from 'semantic-ui-react';
+import { Button, Card, TextArea, Form, Input, Sticky} from 'semantic-ui-react';
 import ItemCard from './ItemCard';
 import OrderCard from './OrderCard';
-import RevealPizza from './RevealPizza'
+import RevealPizza from './RevealPizza';
+import DropDownMenu from './DropDownMenu';
 
 class MenuTabs extends Component{
   state ={
@@ -143,6 +144,7 @@ class MenuTabs extends Component{
           <div>
             <TopHeader handleFilteredItems={this.handleFilteredItems}/>
             <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>  <br/><br/>
+            <Sticky> <Button>new button</Button> </Sticky>
             <Card.Group centered itemsPerRow={2}>
               {this.state.cartListItems.map((item, index)=>{
                 return <OrderCard key={index} itemName={item.name} price={item.price} img_url={item.img_url} handleRemoveItem={this.handleRemoveItem} index={index}/>})}
@@ -174,8 +176,9 @@ class MenuTabs extends Component{
         else{
           return(
             <div className="mainPageDiv">
-              <TopHeader />
+              <TopHeader handleFilteredItems={this.handleFilteredItems}/>
               <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>
+
               <br/><br/><br/><br/><br/><br/>
               <RevealPizza handleFilteredItems={this.handleFilteredItems}/>
             </div>

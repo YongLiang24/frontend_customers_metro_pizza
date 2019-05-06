@@ -143,20 +143,21 @@ class MenuTabs extends Component{
           <div>
             <TopHeader handleFilteredItems={this.handleFilteredItems}/>
             <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
-            <Card.Group centered itemsPerRow={2}>
+            <Card.Group centered >
               {this.state.cartListItems.map((item, index)=>{
                 return <OrderCard key={index} itemName={item.name} price={item.price} img_url={item.img_url} handleRemoveItem={this.handleRemoveItem} index={index}/>})}
             </Card.Group>
-            <Card.Group centered itemsPerRow={1}>
+            <Card.Group centered itemsPerRow={1} className='form_order'>
               <Form onSubmit={this.handleCartForm}>
                 <Form.Group widths='equal'>
-                  <Form.Field control={Input} label='Name'  placeholder='Name' required onChange={this.handleCartInput} value={this.state.customerName} name='customerName'/>
-                  <Form.Field control={Input} label='Phone Number' placeholder='Phone Number'
+                  <Form.Field control={Input} label=<strong>Name</strong>  placeholder='Name' required onChange={this.handleCartInput} value={this.state.customerName} name='customerName'/>
+                  <Form.Field control={Input} label=<strong>Phone #</strong> placeholder='Phone Number'
                     type='number' required onChange={this.handleCartInput} name='customerPhone' value={this.state.customerPhone}/>
                 </Form.Group>
-                <Form.Field control={TextArea} label='Special Instructions:' name="specialInstruction" value={this.state.specialInstruction} onChange={this.handleCartInput}/>
+                <Form.Field control={TextArea} label=<strong>Special Instruction</strong> name="specialInstruction" value={this.state.specialInstruction} onChange={this.handleCartInput}/>
                 <strong>Total: ${this.state.totalPrice}</strong><br/><br/>
-                <Form.Field  control={Button} content='Place Order' />
+                <Form.Field control={Button} content='Place Order' primary/>
+                <br/><hr/>
               </Form>
             </Card.Group>
             </div>)}

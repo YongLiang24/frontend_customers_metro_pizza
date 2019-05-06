@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Card, Image} from 'semantic-ui-react';
 const ItemCard = (props) => (
     <Card centered className="outterCard">
-      <Image src={props.img_url} size='medium' centered/>
+      <Image src={props.img_url} size='medium' centered className='item_card' />
       <Card.Content>
         <Card.Header>{props.name}</Card.Header>
         <Card.Meta>$ {props.price}</Card.Meta>

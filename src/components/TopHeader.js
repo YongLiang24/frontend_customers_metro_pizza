@@ -5,7 +5,7 @@ import elfIcon from '../images/elfIcon.png';
 const TopHeader = (props) => (
   <header >
     <div >
-      <Header size='medium' textAlign='center' id='myHeader' >
+      <Header size='medium' textAlign='center' id='myHeader' fluid='true'>
         <Image src={elfIcon}  size='huge' onClick={props.handleFilteredItems} name='homePage'
         className='iconImage'/>
         <p id='myTitle'>Metro Pizza</p>

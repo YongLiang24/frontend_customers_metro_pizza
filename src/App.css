@@ -27,6 +27,7 @@
 }
 .mainPageDiv{
   text-align: center;
+  margin:auto;
 }
 #RevealContents{
   text-align: center;
@@ -49,7 +50,8 @@
     background-attachment: fixed;
 }
 #cart_list{
-  max-width: 130px;
+  max-width: 150px;
+  text-align: center;
 }
 @media screen and (max-width:1000px) {
   .outterCard:hover{
@@ -65,4 +67,9 @@
 }
 #cart_img{
   max-height: 50px;
+}
+#CartRemoveButton{
+  text-align: center;
+  display: inline-block;
+  font-size: 10px;
 }

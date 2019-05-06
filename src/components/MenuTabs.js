@@ -111,7 +111,7 @@ class MenuTabs extends Component{
       return (
         <div>
           <TopHeader handleFilteredItems={this.handleFilteredItems}/>
-          <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
+          <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>  <br/><br/>
           <Card.Group >
             {this.state.wingMenuItems.map(wing =>{
               return  <ItemCard key={wing.id} name={wing.name} price={wing.price} img_url={wing.img_url} description={wing.description}
@@ -122,7 +122,7 @@ class MenuTabs extends Component{
               return(
                 <div>
                   <TopHeader handleFilteredItems={this.handleFilteredItems}/>
-                  <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
+                  <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>  <br/><br/>
                   <Card.Group >
                     {this.state.beverageMenuItems.map(beverage =>{
                       return   <ItemCard key={beverage.id} name={beverage.name} price={beverage.price} img_url={beverage.img_url} description={beverage.description} handleAddToCart={this.handleAddToCart} itemName={beverage.id} />
@@ -132,7 +132,7 @@ class MenuTabs extends Component{
               return(
                 <div>
                   <TopHeader handleFilteredItems={this.handleFilteredItems}/>
-                  <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
+                  <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>  <br/><br/>
                   <Card.Group >
                     {this.state.pizzaMenuItems.map(pizza =>{
                       return <ItemCard key={pizza.id} name={pizza.name} price={pizza.price} img_url={pizza.img_url} description={pizza.description} handleAddToCart={this.handleAddToCart} itemName={pizza.id} modalOpen={this.state.modalOpen} handleModalOpen={this.handleModalOpen} handleModalClose={this.handleModalClose}/>
@@ -142,8 +142,8 @@ class MenuTabs extends Component{
         return(
           <div>
             <TopHeader handleFilteredItems={this.handleFilteredItems}/>
-            <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
-            <Card.Group centered >
+            <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>  <br/><br/>
+            <Card.Group centered itemsPerRow={2}>
               {this.state.cartListItems.map((item, index)=>{
                 return <OrderCard key={index} itemName={item.name} price={item.price} img_url={item.img_url} handleRemoveItem={this.handleRemoveItem} index={index}/>})}
             </Card.Group>
@@ -165,7 +165,7 @@ class MenuTabs extends Component{
           return(
             <div className="mainPageDiv">
               <TopHeader handleFilteredItems={this.handleFilteredItems}/>
-              <MenuButtons handleFilteredItems={this.handleFilteredItems}/>
+              <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>
               <br/><br/><br/><br/><br/><br/>
               <RevealPizza handleFilteredItems={this.handleFilteredItems}/>
             </div>
@@ -175,7 +175,7 @@ class MenuTabs extends Component{
           return(
             <div className="mainPageDiv">
               <TopHeader />
-              <MenuButtons handleFilteredItems={this.handleFilteredItems}/>
+              <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>
               <br/><br/><br/><br/><br/><br/>
               <RevealPizza handleFilteredItems={this.handleFilteredItems}/>
             </div>

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import MenuButtons from './MenuButtons';
 import TopHeader from './TopHeader';
-import { Button, Card, TextArea} from 'semantic-ui-react';
+import { Button, Card, TextArea, Form, Input} from 'semantic-ui-react';
 import ItemCard from './ItemCard';
 import OrderCard from './OrderCard';
 import RevealPizza from './RevealPizza'
@@ -17,6 +17,7 @@ class MenuTabs extends Component{
     fetch('https://backend-metro-pizza.herokuapp.com/api/v1/menu_items')
     .then(resp => resp.json())
     .then(json =>{this.setState({allMenuItems: json})})
+
   }
   filterItems = (category) =>{
     let items = this.state.allMenuItems.filter(item =>{
@@ -29,6 +30,8 @@ class MenuTabs extends Component{
       case 'wingButton':
         let wingItems = this.filterItems('Wings')
         this.setState({wingMenuItems: wingItems, isMenuItem: ev.target.name})
+        console.log("check wings:", wingItems)
+        console.log("target.name:", ev.target.name)
         break;
       case 'pizzaButton':
         let pizzaItems = this.filterItems('pizza')
@@ -100,8 +103,8 @@ class MenuTabs extends Component{
     }
   }
 
-  handleModalOpen = () => this.setState({ modalOpen: true })
-  handleModalClose = () => this.setState({ modalOpen: false })
+  // handleModalOpen = () => this.setState({ modalOpen: true })
+  // handleModalClose = () => this.setState({ modalOpen: false })
 
   render(){
     if(this.state.isMenuItem === "wingButton"){
@@ -109,57 +112,54 @@ class MenuTabs extends Component{
         <div>
           <TopHeader handleFilteredItems={this.handleFilteredItems}/>
           <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
-          <Card.Group centered >
+          <Card.Group >
             {this.state.wingMenuItems.map(wing =>{
-              return  <Card key={wing.id} className="outterCard">
-                <ItemCard id={wing.id} name={wing.name} price={wing.price} img_url={wing.img_url} description={wing.description}
-                  handleAddToCart={this.handleAddToCart} itemName={wing.id} modalOpen={this.state.modalOpen} handleModalOpen={this.handleModalOpen} handleModalClose={this.handleModalClose}/>
-              </Card>})}
-          </Card.Group> </div> )}
-      else if(this.state.isMenuItem === "beverageButton"){
-        return(
-          <div>
-            <TopHeader handleFilteredItems={this.handleFilteredItems}/>
-            <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
-            <Card.Group centered >
-              {this.state.beverageMenuItems.map(beverage =>{
-                return  <Card key={beverage.id} className="outterCard">
-                  <ItemCard id={beverage.id} name={beverage.name} price={beverage.price} img_url={beverage.img_url} description={beverage.description} handleAddToCart={this.handleAddToCart} itemName={beverage.id} modalOpen={this.state.modalOpen} handleModalOpen={this.handleModalOpen} handleModalClose={this.handleModalClose}/>
-                </Card>})}
-            </Card.Group>  </div>  )}
-      else if(this.state.isMenuItem === "pizzaButton"){
-        return(
-          <div>
-            <TopHeader handleFilteredItems={this.handleFilteredItems}/>
-            <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
-            <Card.Group centered >
-              {this.state.pizzaMenuItems.map(pizza =>{
-                return  <Card key={pizza.id} className="outterCard">
-                  <ItemCard id={pizza.id} name={pizza.name} price={pizza.price} img_url={pizza.img_url} description={pizza.description} handleAddToCart={this.handleAddToCart} itemName={pizza.id} modalOpen={this.state.modalOpen} handleModalOpen={this.handleModalOpen} handleModalClose={this.handleModalClose}/>
-                </Card>})}
+              return  <ItemCard key={wing.id} name={wing.name} price={wing.price} img_url={wing.img_url} description={wing.description}
+                handleAddToCart={this.handleAddToCart} itemName={wing.id}/>
+            })}
+            </Card.Group> </div> )}
+            else if(this.state.isMenuItem === "beverageButton"){
+              return(
+                <div>
+                  <TopHeader handleFilteredItems={this.handleFilteredItems}/>
+                  <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
+                  <Card.Group >
+                    {this.state.beverageMenuItems.map(beverage =>{
+                      return   <ItemCard key={beverage.id} name={beverage.name} price={beverage.price} img_url={beverage.img_url} description={beverage.description} handleAddToCart={this.handleAddToCart} itemName={beverage.id} />
+                    })}
+                  </Card.Group>  </div>  )}
+            else if(this.state.isMenuItem === "pizzaButton"){
+              return(
+                <div>
+                  <TopHeader handleFilteredItems={this.handleFilteredItems}/>
+                  <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
+                  <Card.Group >
+                    {this.state.pizzaMenuItems.map(pizza =>{
+                      return <ItemCard key={pizza.id} name={pizza.name} price={pizza.price} img_url={pizza.img_url} description={pizza.description} handleAddToCart={this.handleAddToCart} itemName={pizza.id} modalOpen={this.state.modalOpen} handleModalOpen={this.handleModalOpen} handleModalClose={this.handleModalClose}/>
+                        })}
             </Card.Group>  </div>  )}
       else if(this.state.isMenuItem === "cartButton"){
         return(
           <div>
             <TopHeader handleFilteredItems={this.handleFilteredItems}/>
             <MenuButtons handleFilteredItems={this.handleFilteredItems}/>  <br/><br/>
-            <form onSubmit={this.handleCartForm}>
-              <Card.Group centered >  <Card id='cartCard'>
-                <br/>
-                <Card.Group centered itemsPerRow={2}>
-                  {this.state.cartListItems.map((item, index)=>{
-                    return <Card key={index} className="outterCard"><OrderCard key={index} itemName={item.name} price={item.price} img_url={item.img_url} handleRemoveItem={this.handleRemoveItem} index={index}/></Card>})} </Card.Group>
-                  <Card.Content id='cartInput'>
-                    <strong>Special Instructions:</strong><br/>
-                    <TextArea name="specialInstruction"
-                      value={this.state.specialInstruction} onChange={this.handleCartInput}/> <br/>
-                    Name: <input type='text' required onChange={this.handleCartInput} name='customerName' value={this.state.customerName}/>
-                    Phone#:<input type='number' required onChange={this.handleCartInput} name='customerPhone' value={this.state.customerPhone}/>
-                    <br/><br/>Total: ${this.state.totalPrice}<br/><br/>
-                    <div className='ui one buttons'>
-                      <Button basic color='green' type='submit'>Place Order</Button>
-                    </div>    </Card.Content> </Card>
-              </Card.Group> </form> </div>)}
+            <Card.Group centered itemsPerRow={2}>
+              {this.state.cartListItems.map((item, index)=>{
+                return <OrderCard key={index} itemName={item.name} price={item.price} img_url={item.img_url} handleRemoveItem={this.handleRemoveItem} index={index}/>})}
+            </Card.Group>
+            <Card.Group centered itemsPerRow={1}>
+              <Form onSubmit={this.handleCartForm}>
+                <Form.Group widths='equal'>
+                  <Form.Field control={Input} label='Name'  placeholder='Name' required onChange={this.handleCartInput} value={this.state.customerName} name='customerName'/>
+                  <Form.Field control={Input} label='Phone Number' placeholder='Phone Number'
+                    type='number' required onChange={this.handleCartInput} name='customerPhone' value={this.state.customerPhone}/>
+                </Form.Group>
+                <Form.Field control={TextArea} label='Special Instructions:' name="specialInstruction" value={this.state.specialInstruction} onChange={this.handleCartInput}/>
+                <strong>Total: ${this.state.totalPrice}</strong><br/><br/>
+                <Form.Field  control={Button} content='Place Order' />
+              </Form>
+            </Card.Group>
+            </div>)}
         else if(this.state.isMenuItem === "homePage"){
           return(
             <div className="mainPageDiv">

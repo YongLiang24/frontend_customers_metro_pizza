@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import MenuButtons from './MenuButtons';
 import TopHeader from './TopHeader';
-import { Button, Card, TextArea, Form, Input, Sticky} from 'semantic-ui-react';
+import { Button, Card, TextArea, Form, Input, Message} from 'semantic-ui-react';
 import ItemCard from './ItemCard';
 import OrderCard from './OrderCard';
 import RevealPizza from './RevealPizza';
@@ -11,7 +11,7 @@ class MenuTabs extends Component{
   state ={
     allMenuItems: [], pizzaMenuItems:[], wingMenuItems: [], beverageMenuItems:[],
     isMenuItem: '', cartListItems: [], totalPrice:0, customerName: '',
-    customerPhone: '', modalOpen: false, specialInstruction: ''
+    customerPhone: '', modalOpen: false, specialInstruction: '', messageHidden: 'hidden'
   }
 
   componentDidMount(){
@@ -47,7 +47,7 @@ class MenuTabs extends Component{
         let totalPrice = 0;
         this.state.cartListItems.map(item=>{
           return totalPrice =(parseFloat(totalPrice) + parseFloat(item.price))})
-        this.setState({totalPrice: totalPrice.toFixed(2)})
+        this.setState({totalPrice: totalPrice.toFixed(2), messageHidden: 'hidden'})
         break;
       case 'homePage':
         this.setState({isMenuItem: ev.target.name})
@@ -96,8 +96,7 @@ class MenuTabs extends Component{
         Accept: 'application/json'},
         body: JSON.stringify({Customer_Name, Customer_Phone, Special_Instruction, Total_Price, Order_Time, order_lists} )
     })
-    this.setState({cartListItems: [], customerName: '', customerPhone: '', specialInstruction: ''})
-      alert("Thank you for your order")
+    this.setState({cartListItems: [], customerName: '', customerPhone: '', specialInstruction: '', totalPrice: 0, messageHidden: 'visible'})
     }
     else{
       alert("please place some items in the cart.")
@@ -141,13 +140,17 @@ class MenuTabs extends Component{
             </Card.Group>  </div>  )}
       else if(this.state.isMenuItem === "cartButton"){
         return(
-          <div>
+          <div id='cartDiv'>
             <TopHeader handleFilteredItems={this.handleFilteredItems}/>
             <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>  <br/><br/>
             <Card.Group centered itemsPerRow={2}>
               {this.state.cartListItems.map((item, index)=>{
                 return <OrderCard key={index} itemName={item.name} price={item.price} img_url={item.img_url} handleRemoveItem={this.handleRemoveItem} index={index}/>})}
             </Card.Group>
+            <Message  header='Order Completed' positive floating compact
+              content="We have received your order,it's ready for pickup in 15 to 30 minutes. Thank You."
+              style={{visibility: this.state.messageHidden}}
+            />
             <Card.Group centered itemsPerRow={1} className='form_order'>
               <Form onSubmit={this.handleCartForm}>
                 <Form.Group widths='equal'>

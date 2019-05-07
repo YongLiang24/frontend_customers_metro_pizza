@@ -144,7 +144,6 @@ class MenuTabs extends Component{
           <div>
             <TopHeader handleFilteredItems={this.handleFilteredItems}/>
             <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>  <br/><br/>
-            <Sticky> <Button>new button</Button> </Sticky>
             <Card.Group centered itemsPerRow={2}>
               {this.state.cartListItems.map((item, index)=>{
                 return <OrderCard key={index} itemName={item.name} price={item.price} img_url={item.img_url} handleRemoveItem={this.handleRemoveItem} index={index}/>})}
@@ -178,7 +177,6 @@ class MenuTabs extends Component{
             <div className="mainPageDiv">
               <TopHeader handleFilteredItems={this.handleFilteredItems}/>
               <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>
-
               <br/><br/><br/><br/><br/><br/>
               <RevealPizza handleFilteredItems={this.handleFilteredItems}/>
             </div>

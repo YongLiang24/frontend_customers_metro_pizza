@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dropdown, Sticky, Button, Icon, Card} from 'semantic-ui-react';
+import {Dropdown, Sticky, Button, Icon} from 'semantic-ui-react';
 
 const DropDownMenu =(props)=>{
   return(

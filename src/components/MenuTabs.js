@@ -103,9 +103,6 @@ class MenuTabs extends Component{
     }
   }
 
-  // handleModalOpen = () => this.setState({ modalOpen: true })
-  // handleModalClose = () => this.setState({ modalOpen: false })
-
   render(){
     if(this.state.isMenuItem === "wingButton"){
       return (

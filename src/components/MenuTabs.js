@@ -71,10 +71,7 @@ class MenuTabs extends Component{
       let updatedCartItem = this.state.cartListItems.slice();
       updatedCartItem.push(cartObject);
       this.setState({cartListItems: updatedCartItem})
-      confirmAlert({
-      message: `"${selectedItem.name}" has been added to your cart.`,
-      buttons: [{label: 'Okay'}]
-    });
+
   }
 
   handleRemoveItem = (ev)=>{
@@ -110,14 +107,8 @@ class MenuTabs extends Component{
         console.log("json error:", err)
       })
       this.setState({cartListItems: [], customerName: '', customerPhone: '', specialInstruction: '', totalPrice: 0, messageHidden: 'visible'})
-      confirmAlert({
-      message: `"Your order has been placed, thank you..`,
-      buttons: [{label: 'Okay'}]
-    });
       }
       else{alert("Sorry the cart is empty.")}
-
-
   }
 
   render(){
@@ -161,10 +152,6 @@ class MenuTabs extends Component{
               {this.state.cartListItems.map((item, index)=>{
                 return <OrderCard key={index} itemName={item.name} price={item.price} img_url={item.img_url} handleRemoveItem={this.handleRemoveItem} index={index}/>})}
             </Card.Group>
-            <Message  header='Order Completed' positive floating compact
-              content="We have received your order,it's ready for pickup in 15 to 30 minutes. Thank You."
-              style={{visibility: this.state.messageHidden}}
-            />
             <Card.Group centered itemsPerRow={1} className='form_order'>
               <Form onSubmit={this.handleCartForm}>
                 <Form.Group widths='equal'>
@@ -174,7 +161,12 @@ class MenuTabs extends Component{
                 </Form.Group>
                 <Form.Field control={TextArea} label=<strong>Special Instruction</strong> name="specialInstruction" value={this.state.specialInstruction} onChange={this.handleCartInput}/>
                 <strong>Total: ${this.state.totalPrice}</strong><br/><br/>
-                <Form.Field control={Button} content='Place Order' primary/>
+                <Modal
+                  trigger={  <Form.Field control={Button} content='Place Order' primary/>}
+                  header={"Order Completed"}
+                  content="We have received your order. It will be ready for pickup in 15 to 30 minutes. Thank You."
+                  actions={[{ key: 'done', content: 'Okay', positive: true, fluid: true}]}
+                  style={{textAlign: "center"}} size='small'/>
                 <br/><hr/>
               </Form>
             </Card.Group>

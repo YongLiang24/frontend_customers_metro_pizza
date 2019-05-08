@@ -81,3 +81,6 @@
 #cartDiv{
   text-align: center;
 }
+*{
+  touch-action: manipulation;
+}

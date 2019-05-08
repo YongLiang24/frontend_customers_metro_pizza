@@ -1,9 +1,10 @@
 {
   "name": "frontend_customers_elf_pizza",
   "version": "0.1.0",
-  "homepage": "http://yongliang24.github.io/frontend_customers_metro_pizza",
+  "homepage": "https://yongliang24.github.io/frontend_customers_metro_pizza",
   "private": true,
   "dependencies": {
+    "gh-pages": "^2.0.1",
     "react": "^16.8.6",
     "react-confirm-alert": "^2.4.1",
     "react-dom": "^16.8.6",
@@ -35,5 +36,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {}
 }

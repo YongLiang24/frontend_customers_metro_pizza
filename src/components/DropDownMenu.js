@@ -10,7 +10,7 @@ const DropDownMenu =(props)=>{
             <Button onClick={props.handleFilteredItems} name='pizzaButton'>Pizza Menu</Button>
             <Button onClick={props.handleFilteredItems} name='wingButton'>Wings & Sides Menu</Button>
             <Button onClick={props.handleFilteredItems} name='beverageButton'>Beverages Menu</Button>
-            <a href="https://frontend-admin-metro-pizza.herokuapp.com/" target="_blank" rel="noopener noreferrer"><Button>Visit Administrator Site</Button></a>
+            <a href="https://yongliang24.github.io/frontend_admin_metro_pizza/" target="_blank" rel="noopener noreferrer"><Button>Visit Administrator Site</Button></a>
           </Button.Group><hr/>
           <a href="https://github.com/YongLiang24" target="_blank" rel="noopener noreferrer">
             <Icon name="github" size='large' link/></a>

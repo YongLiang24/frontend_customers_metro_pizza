@@ -1,17 +1,19 @@
 import React, {Component} from 'react';
 import MenuButtons from './MenuButtons';
 import TopHeader from './TopHeader';
-import { Button, Card, TextArea, Form, Input, Message} from 'semantic-ui-react';
+import { Button, Card, TextArea, Form, Input, Message, Modal} from 'semantic-ui-react';
 import ItemCard from './ItemCard';
 import OrderCard from './OrderCard';
 import RevealPizza from './RevealPizza';
 import DropDownMenu from './DropDownMenu';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 class MenuTabs extends Component{
   state ={
     allMenuItems: [], pizzaMenuItems:[], wingMenuItems: [], beverageMenuItems:[],
     isMenuItem: '', cartListItems: [], totalPrice:0, customerName: '',
-    customerPhone: '', modalOpen: false, specialInstruction: '', messageHidden: 'hidden'
+    customerPhone: '', specialInstruction: '', messageHidden: 'hidden'
   }
 
   componentDidMount(){
@@ -62,9 +64,14 @@ class MenuTabs extends Component{
     })
     const cartObject ={name: selectedItem.name, price: selectedItem.price,
       img_url: selectedItem.img_url,id: selectedItem.id}
-    let updatedCartItem = this.state.cartListItems.slice()
-    updatedCartItem.push(cartObject)
-    this.setState({cartListItems: updatedCartItem, modalOpen:false})
+    confirmAlert({
+      title: `Add this "${selectedItem.name}" to cart?`,
+      buttons: [{label: 'Go Back'},
+      {  label: 'Add to Cart',
+        onClick: () =>{let updatedCartItem = this.state.cartListItems.slice();
+        updatedCartItem.push(cartObject);
+        this.setState({cartListItems: updatedCartItem});}}]
+    });
   }
 
   handleRemoveItem = (ev)=>{
@@ -82,25 +89,28 @@ class MenuTabs extends Component{
 
   handleCartForm =(ev)=>{
     ev.preventDefault()
-    if(this.state.cartListItems.length > 0){
-      const currentTime = new Date().toLocaleTimeString()
-      const Order_Time = currentTime;
-      const Customer_Name = ev.target.customerName.value;
-      const Customer_Phone =ev.target.customerPhone.value;
-      const Special_Instruction = ev.target.specialInstruction.value;
-      const Total_Price = this.state.totalPrice;
-      const order_lists = this.state.cartListItems;
-    fetch('https://backend-metro-pizza.herokuapp.com/api/v1/orders',{
-      method: 'POST',
-      headers:{'Content-Type': 'application/json',
-        Accept: 'application/json'},
-        body: JSON.stringify({Customer_Name, Customer_Phone, Special_Instruction, Total_Price, Order_Time, order_lists} )
-    })
-    this.setState({cartListItems: [], customerName: '', customerPhone: '', specialInstruction: '', totalPrice: 0, messageHidden: 'visible'})
+    const x = window.confirm("Would you like to place this order?");
+    if (x){
+      if(this.state.cartListItems.length > 0){
+        const currentTime = new Date().toLocaleTimeString()
+        const Order_Time = currentTime;
+        const Customer_Name = ev.target.customerName.value;
+        const Customer_Phone =ev.target.customerPhone.value;
+        const Special_Instruction = ev.target.specialInstruction.value;
+        const Total_Price = this.state.totalPrice;
+        const order_lists = this.state.cartListItems;
+      fetch('https://backend-metro-pizza.herokuapp.com/api/v1/orders',{
+        method: 'POST',
+        headers:{'Content-Type': 'application/json',
+          Accept: 'application/json'},
+          body: JSON.stringify({Customer_Name, Customer_Phone, Special_Instruction, Total_Price, Order_Time, order_lists} )
+      })
+      this.setState({cartListItems: [], customerName: '', customerPhone: '', specialInstruction: '', totalPrice: 0, messageHidden: 'visible'})
+      }
+      else{alert("Sorry your cart is empty.")}
+      return true;
     }
-    else{
-      alert("please place some items in the cart.")
-    }
+    else {return false;}
   }
 
   render(){
@@ -132,7 +142,7 @@ class MenuTabs extends Component{
                   <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>  <br/><br/>
                   <Card.Group >
                     {this.state.pizzaMenuItems.map(pizza =>{
-                      return <ItemCard key={pizza.id} name={pizza.name} price={pizza.price} img_url={pizza.img_url} description={pizza.description} handleAddToCart={this.handleAddToCart} itemName={pizza.id} modalOpen={this.state.modalOpen} handleModalOpen={this.handleModalOpen} handleModalClose={this.handleModalClose}/>
+                      return <ItemCard key={pizza.id} name={pizza.name} price={pizza.price} img_url={pizza.img_url} description={pizza.description} handleAddToCart={this.handleAddToCart} itemName={pizza.id}/>
                         })}
             </Card.Group>  </div>  )}
       else if(this.state.isMenuItem === "cartButton"){

@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "react": "^16.8.6",
+    "react-confirm-alert": "^2.4.1",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.2",
     "react-scripts": "3.0.0",

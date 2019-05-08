@@ -20,14 +20,18 @@ class MenuTabs extends Component{
     fetch('https://backend-metro-pizza.herokuapp.com/api/v1/menu_items')
     .then(resp => resp.json())
     .then(json =>{this.setState({allMenuItems: json})})
-
+    .catch(err =>{
+      console.log("json error:", err)
+    })
   }
+
   filterItems = (category) =>{
     let items = this.state.allMenuItems.filter(item =>{
       return item.category === category
     })
     return items
   }
+
   handleFilteredItems = (ev)=>{
     switch(ev.target.name){
       case 'wingButton':
@@ -64,13 +68,12 @@ class MenuTabs extends Component{
     })
     const cartObject ={name: selectedItem.name, price: selectedItem.price,
       img_url: selectedItem.img_url,id: selectedItem.id}
-    confirmAlert({
-      title: `Add this "${selectedItem.name}" to cart?`,
-      buttons: [{label: 'Go Back'},
-      {  label: 'Add to Cart',
-        onClick: () =>{let updatedCartItem = this.state.cartListItems.slice();
-        updatedCartItem.push(cartObject);
-        this.setState({cartListItems: updatedCartItem});}}]
+      let updatedCartItem = this.state.cartListItems.slice();
+      updatedCartItem.push(cartObject);
+      this.setState({cartListItems: updatedCartItem})
+      confirmAlert({
+      message: `"${selectedItem.name}" has been added to your cart.`,
+      buttons: [{label: 'Okay'}]
     });
   }
 
@@ -89,8 +92,6 @@ class MenuTabs extends Component{
 
   handleCartForm =(ev)=>{
     ev.preventDefault()
-    const x = window.confirm("Would you like to place this order?");
-    if (x){
       if(this.state.cartListItems.length > 0){
         const currentTime = new Date().toLocaleTimeString()
         const Order_Time = currentTime;
@@ -105,12 +106,18 @@ class MenuTabs extends Component{
           Accept: 'application/json'},
           body: JSON.stringify({Customer_Name, Customer_Phone, Special_Instruction, Total_Price, Order_Time, order_lists} )
       })
+      .catch(err =>{
+        console.log("json error:", err)
+      })
       this.setState({cartListItems: [], customerName: '', customerPhone: '', specialInstruction: '', totalPrice: 0, messageHidden: 'visible'})
+      confirmAlert({
+      message: `"Your order has been placed, thank you..`,
+      buttons: [{label: 'Okay'}]
+    });
       }
-      else{alert("Sorry your cart is empty.")}
-      return true;
-    }
-    else {return false;}
+      else{alert("Sorry the cart is empty.")}
+
+
   }
 
   render(){

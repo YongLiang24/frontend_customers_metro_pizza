@@ -84,3 +84,9 @@
 *{
   touch-action: manipulation;
 }
+#mainParagraph{
+  font-size: 1.8em;
+  font-style: italic;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px coral;
+}

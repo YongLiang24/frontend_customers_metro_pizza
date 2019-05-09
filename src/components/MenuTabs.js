@@ -6,8 +6,6 @@ import ItemCard from './ItemCard';
 import OrderCard from './OrderCard';
 import RevealPizza from './RevealPizza';
 import DropDownMenu from './DropDownMenu';
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
 
 class MenuTabs extends Component{
   state ={
@@ -188,6 +186,7 @@ class MenuTabs extends Component{
               <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>
               <br/><br/><br/><br/><br/><br/>
               <RevealPizza handleFilteredItems={this.handleFilteredItems}/>
+              <p id='mainParagraph'>Click on the tray above to start!</p>
             </div>
           )}
         }

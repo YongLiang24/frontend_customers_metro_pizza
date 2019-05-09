@@ -10,7 +10,7 @@ class MenuTabs extends Component{
   state ={
     allMenuItems: [], pizzaMenuItems:[], wingMenuItems: [], beverageMenuItems:[],
     isMenuItem: '', cartListItems: [], totalPrice:0, customerName: '',
-    customerPhone: '', specialInstruction: '', messageHidden: 'hidden'
+    customerPhone: '', specialInstruction: '', isModal: false
   }
 
   componentDidMount(){
@@ -103,9 +103,13 @@ class MenuTabs extends Component{
       .catch(err =>{
         console.log("json error:", err)
       })
-      this.setState({cartListItems: [], customerName: '', customerPhone: '', specialInstruction: '', totalPrice: 0, messageHidden: 'visible'})
+      this.setState({cartListItems: [], customerName: '', customerPhone: '', specialInstruction: '', totalPrice: 0, messageHidden: 'visible', isModal: true})
       }
       else{alert("Sorry the cart is empty.")}
+  }
+
+  handleModalClose = ()=>{
+    this.setState({isModal: false, isMenuItem: 'homePage'})
   }
 
   render(){
@@ -159,11 +163,12 @@ class MenuTabs extends Component{
                 <Form.Field control={TextArea} label=<strong>Special Instruction</strong> name="specialInstruction" value={this.state.specialInstruction} onChange={this.handleCartInput}/>
                 <strong>Total: ${this.state.totalPrice}</strong><br/><br/>
                 <Modal
-                  trigger={  <Form.Field control={Button} content='Place Order' primary/>}
-                  header={"Order Completed"}
-                  content="We have received your order. It will be ready for pickup in 15 to 30 minutes. Thank You."
-                  actions={[{ key: 'done', content: 'Okay', positive: true, fluid: true}]}
-                  style={{textAlign: "center"}} size='small'/>
+                  trigger={<Form.Field control={Button} content='Place Order' primary/>}
+                  style={{textAlign: "center"}} size='small' open={this.state.isModal}>
+                  <Modal.Header>Order Completed</Modal.Header>
+                  <Modal.Content>We have received your order. It will be ready for pickup in 15 to 30 minutes. Thank You.</Modal.Content>
+                  <Button size='large' style={{width: "30%"}} positive onClick={this.handleModalClose} compact >Okay</Button> <hr/>
+              </Modal>
                 <br/><hr/>
               </Form>
             </Card.Group>
@@ -174,6 +179,7 @@ class MenuTabs extends Component{
               <TopHeader handleFilteredItems={this.handleFilteredItems}/>
               <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>
               <br/><br/><br/><br/><br/><br/>
+              <p id='mainParagraph'>Click on the tray below to start!</p>
               <RevealPizza handleFilteredItems={this.handleFilteredItems}/>
             </div>
           )
@@ -184,8 +190,8 @@ class MenuTabs extends Component{
               <TopHeader handleFilteredItems={this.handleFilteredItems}/>
               <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>
               <br/><br/><br/><br/><br/><br/>
+              <p id='mainParagraph'>Click on the tray below to start!</p>
               <RevealPizza handleFilteredItems={this.handleFilteredItems}/>
-              <p id='mainParagraph'>Click on the tray above to start!</p>
             </div>
           )}
         }

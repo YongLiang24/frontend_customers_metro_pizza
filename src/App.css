@@ -12,15 +12,16 @@
   text-align: center;
   width: 60%;
 }
-#itemImages{
-  height: 125px;
-}
+
 #cardContent{
   text-align: center;
 }
 
 .outterCard:hover{
   transform: scale(1.04);
+}
+#menu_card{
+  background-color:mintcream;
 }
 #cartInput{
   font-size: 1.3em;

@@ -177,8 +177,7 @@ class MenuTabs extends Component{
           return(
             <div className="mainPageDiv">
               <TopHeader handleFilteredItems={this.handleFilteredItems}/>
-              <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>
-              <br/><br/><br/><br/><br/><br/>
+              <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/><br/><br/>
               <p id='mainParagraph'>Click on the tray below to start!</p>
               <RevealPizza handleFilteredItems={this.handleFilteredItems}/>
             </div>
@@ -188,8 +187,7 @@ class MenuTabs extends Component{
           return(
             <div className="mainPageDiv">
               <TopHeader handleFilteredItems={this.handleFilteredItems}/>
-              <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>
-              <br/><br/><br/><br/><br/><br/>
+              <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>  <br/><br/>
               <p id='mainParagraph'>Click on the tray below to start!</p>
               <RevealPizza handleFilteredItems={this.handleFilteredItems}/>
             </div>

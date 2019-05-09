@@ -139,7 +139,7 @@ class MenuTabs extends Component{
                 <div>
                   <TopHeader handleFilteredItems={this.handleFilteredItems}/>
                   <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>  <br/><br/>
-                  <Card.Group >
+                  <Card.Group centered itemsPerRow={4}>
                     {this.state.pizzaMenuItems.map(pizza =>{
                       return <ItemCard key={pizza.id} name={pizza.name} price={pizza.price} img_url={pizza.img_url} description={pizza.description} handleAddToCart={this.handleAddToCart} itemName={pizza.id}/>
                         })}

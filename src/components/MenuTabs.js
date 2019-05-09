@@ -10,10 +10,11 @@ class MenuTabs extends Component{
   state ={
     allMenuItems: [], pizzaMenuItems:[], wingMenuItems: [], beverageMenuItems:[],
     isMenuItem: '', cartListItems: [], totalPrice:0, customerName: '',
-    customerPhone: '', specialInstruction: '', isModal: false
+    customerPhone: '', specialInstruction: '', isModal: false, itemPerRow: 4
   }
 
   componentDidMount(){
+    this.handleItemPerRow()
     fetch('https://backend-metro-pizza.herokuapp.com/api/v1/menu_items')
     .then(resp => resp.json())
     .then(json =>{this.setState({allMenuItems: json})})
@@ -112,13 +113,22 @@ class MenuTabs extends Component{
     this.setState({isModal: false, isMenuItem: 'homePage'})
   }
 
+  handleItemPerRow =()=>{
+    if(window.innerWidth < 1000){
+      this.setState({itemPerRow: 1})
+    }
+    else{
+      this.setState({itemPerRow: 4})
+    }
+  }
+
   render(){
     if(this.state.isMenuItem === "wingButton"){
       return (
         <div>
           <TopHeader handleFilteredItems={this.handleFilteredItems}/>
           <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>  <br/><br/>
-          <Card.Group >
+          <Card.Group centered itemsPerRow={this.state.itemPerRow}>
             {this.state.wingMenuItems.map(wing =>{
               return  <ItemCard key={wing.id} name={wing.name} price={wing.price} img_url={wing.img_url} description={wing.description}
                 handleAddToCart={this.handleAddToCart} itemName={wing.id}/>
@@ -129,7 +139,7 @@ class MenuTabs extends Component{
                 <div>
                   <TopHeader handleFilteredItems={this.handleFilteredItems}/>
                   <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>  <br/><br/>
-                  <Card.Group >
+                  <Card.Group centered itemsPerRow={this.state.itemPerRow}>
                     {this.state.beverageMenuItems.map(beverage =>{
                       return   <ItemCard key={beverage.id} name={beverage.name} price={beverage.price} img_url={beverage.img_url} description={beverage.description} handleAddToCart={this.handleAddToCart} itemName={beverage.id} />
                     })}
@@ -139,7 +149,7 @@ class MenuTabs extends Component{
                 <div>
                   <TopHeader handleFilteredItems={this.handleFilteredItems}/>
                   <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>  <br/><br/>
-                  <Card.Group centered itemsPerRow={4}>
+                  <Card.Group centered itemsPerRow={this.state.itemPerRow}>
                     {this.state.pizzaMenuItems.map(pizza =>{
                       return <ItemCard key={pizza.id} name={pizza.name} price={pizza.price} img_url={pizza.img_url} description={pizza.description} handleAddToCart={this.handleAddToCart} itemName={pizza.id}/>
                         })}

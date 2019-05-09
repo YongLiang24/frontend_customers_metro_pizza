@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, Image, Icon, Sticky, Popup} from 'semantic-ui-react';
+import { Header, Image, Popup} from 'semantic-ui-react';
 import elfIcon from '../images/elfIcon.png';
 import DropDownMenu from './DropDownMenu';
 

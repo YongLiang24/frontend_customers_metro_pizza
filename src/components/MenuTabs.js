@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import MenuButtons from './MenuButtons';
 import TopHeader from './TopHeader';
-import { Button, Card, TextArea, Form, Input, Message, Modal} from 'semantic-ui-react';
+import { Button, Card, TextArea, Form, Input, Modal} from 'semantic-ui-react';
 import ItemCard from './ItemCard';
 import OrderCard from './OrderCard';
 import RevealPizza from './RevealPizza';
-import DropDownMenu from './DropDownMenu';
 
 class MenuTabs extends Component{
   state ={

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Icon} from 'semantic-ui-react';
 const MenuButtons = (props)=>{
   return(
       <div className="four ui buttons fluid">

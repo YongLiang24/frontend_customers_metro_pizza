@@ -6,7 +6,7 @@ import PizzaImage from '../images/PizzaImage.png'
 const RevealPizza = (props) => (
   <Reveal animated='small fade' id="RevealContents" >
     <Reveal.Content visible>
-      <Popup content=<p>Metro Pizza is an application which allows customers to place pizza orders online and send orders to the Administrator site.<a href="https://yongliang24.github.io/frontend_admin_metro_pizza/" target="_blank" rel="noopener noreferrer">Link to Administrator</a>. <strong>Note: Metro Pizza is a student's project not a actually restaurant site.</strong></p>  trigger={<Image circular size='large' src={PizzaCover}  className='iconImage'/>}  header="About" position='top center' hoverable on='click'/>
+      <Popup content=<p>Metro Pizza is an application which allows customers to place pizza orders online and send orders to the Administrator site.<a href="https://yongliang24.github.io/frontend_admin_metro_pizza/" target="_blank" rel="noopener noreferrer">Link to Administrator</a>. <strong>Note: Metro Pizza is a personal project not a actually restaurant site.</strong></p>  trigger={<Image circular size='large' src={PizzaCover}  className='iconImage'/>}  header="About" position='top center' hoverable on='click'/>
     </Reveal.Content>
     <Reveal.Content hidden>
       <Image circular size='large' src={PizzaImage} />

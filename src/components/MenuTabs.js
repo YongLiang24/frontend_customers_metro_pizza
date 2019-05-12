@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import MenuButtons from './MenuButtons';
 import TopHeader from './TopHeader';
-import { Button, Card, TextArea, Form, Input, Modal} from 'semantic-ui-react';
+import { Button, Card, TextArea, Form, Input, Modal, Menu} from 'semantic-ui-react';
 import ItemCard from './ItemCard';
 import OrderCard from './OrderCard';
 import RevealPizza from './RevealPizza';
@@ -14,7 +14,7 @@ class MenuTabs extends Component{
   }
 
   componentDidMount(){
-    this.handleItemPerRow()
+    setInterval(this.handleItemPerRow, 3000)
     fetch('https://backend-metro-pizza.herokuapp.com/api/v1/menu_items')
     .then(resp => resp.json())
     .then(json =>{this.setState({allMenuItems: json})})
@@ -31,12 +31,11 @@ class MenuTabs extends Component{
   }
 
   handleFilteredItems = (ev)=>{
+    // console.log(ev.target.name)
     switch(ev.target.name){
       case 'wingButton':
         let wingItems = this.filterItems('Wings')
         this.setState({wingMenuItems: wingItems, isMenuItem: ev.target.name})
-        console.log("check wings:", wingItems)
-        console.log("target.name:", ev.target.name)
         break;
       case 'pizzaButton':
         let pizzaItems = this.filterItems('pizza')
@@ -114,7 +113,9 @@ class MenuTabs extends Component{
   }
 
   handleItemPerRow =()=>{
-    if(window.innerWidth < 1000){
+    // console.log("x")
+    const windowWidth = window.innerWidth
+    if(windowWidth < 1000){
       this.setState({itemPerRow: 1})
     }
     else{
@@ -126,8 +127,8 @@ class MenuTabs extends Component{
     if(this.state.isMenuItem === "wingButton"){
       return (
         <div>
-          <TopHeader handleFilteredItems={this.handleFilteredItems}/>
-          <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>  <br/><br/>
+          <Menu fixed="top" size="mini">
+            <TopHeader handleFilteredItems={this.handleFilteredItems}/> <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/></Menu><br/><br/><br/><br/><br/>
           <Card.Group centered itemsPerRow={this.state.itemPerRow}>
             {this.state.wingMenuItems.map(wing =>{
               return  <ItemCard key={wing.id} name={wing.name} price={wing.price} img_url={wing.img_url} description={wing.description}
@@ -137,8 +138,8 @@ class MenuTabs extends Component{
             else if(this.state.isMenuItem === "beverageButton"){
               return(
                 <div>
-                  <TopHeader handleFilteredItems={this.handleFilteredItems}/>
-                  <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>  <br/><br/>
+                  <Menu fixed="top" size="mini">
+                    <TopHeader handleFilteredItems={this.handleFilteredItems}/><MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/></Menu><br/><br/><br/><br/><br/>
                   <Card.Group centered itemsPerRow={this.state.itemPerRow}>
                     {this.state.beverageMenuItems.map(beverage =>{
                       return   <ItemCard key={beverage.id} name={beverage.name} price={beverage.price} img_url={beverage.img_url} description={beverage.description} handleAddToCart={this.handleAddToCart} itemName={beverage.id} />
@@ -147,8 +148,8 @@ class MenuTabs extends Component{
             else if(this.state.isMenuItem === "pizzaButton"){
               return(
                 <div>
-                  <TopHeader handleFilteredItems={this.handleFilteredItems}/>
-                  <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>  <br/><br/>
+                  <Menu fixed="top" size="mini">
+                    <TopHeader handleFilteredItems={this.handleFilteredItems}/><MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/></Menu><br/><br/><br/><br/><br/>
                   <Card.Group centered itemsPerRow={this.state.itemPerRow}>
                     {this.state.pizzaMenuItems.map(pizza =>{
                       return <ItemCard key={pizza.id} name={pizza.name} price={pizza.price} img_url={pizza.img_url} description={pizza.description} handleAddToCart={this.handleAddToCart} itemName={pizza.id}/>
@@ -157,8 +158,8 @@ class MenuTabs extends Component{
       else if(this.state.isMenuItem === "cartButton"){
         return(
           <div id='cartDiv'>
-            <TopHeader handleFilteredItems={this.handleFilteredItems}/>
-            <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>  <br/><br/>
+            <Menu fixed="top" size="mini">
+              <TopHeader handleFilteredItems={this.handleFilteredItems}/><MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/></Menu><br/><br/><br/><br/><br/>
             <Card.Group centered itemsPerRow={2}>
               {this.state.cartListItems.map((item, index)=>{
                 return <OrderCard key={index} itemName={item.name} price={item.price} img_url={item.img_url} handleRemoveItem={this.handleRemoveItem} index={index}/>})}
@@ -186,8 +187,8 @@ class MenuTabs extends Component{
         else if(this.state.isMenuItem === "homePage"){
           return(
             <div className="mainPageDiv">
-              <TopHeader handleFilteredItems={this.handleFilteredItems}/>
-              <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/><br/><br/>
+              <Menu fixed="top" size="mini">
+                <TopHeader handleFilteredItems={this.handleFilteredItems}/><MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/></Menu><br/><br/><br/><br/><br/>
               <p id='mainParagraph'>Click on the tray below to start!</p>
               <RevealPizza handleFilteredItems={this.handleFilteredItems}/>
             </div>
@@ -196,8 +197,8 @@ class MenuTabs extends Component{
         else{
           return(
             <div className="mainPageDiv">
-              <TopHeader handleFilteredItems={this.handleFilteredItems}/>
-              <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/>  <br/><br/>
+              <Menu fixed="top" size="mini">
+                <TopHeader handleFilteredItems={this.handleFilteredItems}/><MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/></Menu><br/><br/><br/><br/><br/>
               <p id='mainParagraph'>Click on the tray below to start!</p>
               <RevealPizza handleFilteredItems={this.handleFilteredItems}/>
             </div>

@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0f5aab1dd725169e5c8cf82a59925623",
+    "revision": "3f3996eea50c8c6e39dd00ab6b7a83b8",
     "url": "/frontend_customers_metro_pizza/index.html"
   },
   {
-    "revision": "06badd0a89e64700b419",
+    "revision": "6d03800b745074f57924",
     "url": "/frontend_customers_metro_pizza/static/css/2.25f3f48f.chunk.css"
   },
   {
-    "revision": "d95f182f8ad26d2d597e",
-    "url": "/frontend_customers_metro_pizza/static/css/main.de7c1f0d.chunk.css"
+    "revision": "11f120907d438d6c20b6",
+    "url": "/frontend_customers_metro_pizza/static/css/main.f4439f95.chunk.css"
   },
   {
-    "revision": "06badd0a89e64700b419",
-    "url": "/frontend_customers_metro_pizza/static/js/2.be458f31.chunk.js"
+    "revision": "6d03800b745074f57924",
+    "url": "/frontend_customers_metro_pizza/static/js/2.c8064232.chunk.js"
   },
   {
-    "revision": "d95f182f8ad26d2d597e",
-    "url": "/frontend_customers_metro_pizza/static/js/main.b8d789a8.chunk.js"
+    "revision": "11f120907d438d6c20b6",
+    "url": "/frontend_customers_metro_pizza/static/js/main.24bca573.chunk.js"
   },
   {
     "revision": "295e3208d3ce16cfe82d",
@@ -50,10 +50,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "e8c322de9658cbeb8a774b6624167c2c",
     "url": "/frontend_customers_metro_pizza/static/media/brand-icons.e8c322de.woff2"
-  },
-  {
-    "revision": "f6a00497cd37a2d76a285efaddb34fc4",
-    "url": "/frontend_customers_metro_pizza/static/media/elfIcon.f6a00497.png"
   },
   {
     "revision": "9c74e172f87984c48ddf5c8108cabe67",

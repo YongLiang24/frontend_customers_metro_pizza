@@ -10,17 +10,26 @@ class MenuTabs extends Component{
   state ={
     allMenuItems: [], pizzaMenuItems:[], wingMenuItems: [], beverageMenuItems:[],
     isMenuItem: '', cartListItems: [], totalPrice:0, customerName: '',
-    customerPhone: '', specialInstruction: '', isModal: false, itemPerRow: 4
+    customerPhone: '', specialInstruction: '', isModal: false, itemPerRow: 4, barSize: "huge"
   }
 
   componentDidMount(){
     setInterval(this.handleItemPerRow, 3000)
+    this.handleBarSize()
     fetch('https://backend-metro-pizza.herokuapp.com/api/v1/menu_items')
     .then(resp => resp.json())
     .then(json =>{this.setState({allMenuItems: json})})
     .catch(err =>{
       console.log("json error:", err)
     })
+  }
+
+  handleBarSize = ()=>{
+    if(window.innerWidth < 400){
+      this.setState({barSize: "big"})
+    }else{
+      this.setState({barSize: "huge"})
+    }
   }
 
   filterItems = (category) =>{
@@ -128,7 +137,7 @@ class MenuTabs extends Component{
       return (
         <div>
           <Menu fixed="top" size="mini">
-            <TopHeader handleFilteredItems={this.handleFilteredItems}/> <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/></Menu><br/><br/><br/><br/><br/>
+            <TopHeader handleFilteredItems={this.handleFilteredItems} barSize={this.state.barSize}/> <MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/></Menu><br/><br/><br/><br/><br/>
           <Card.Group centered itemsPerRow={this.state.itemPerRow}>
             {this.state.wingMenuItems.map(wing =>{
               return  <ItemCard key={wing.id} name={wing.name} price={wing.price} img_url={wing.img_url} description={wing.description}
@@ -139,7 +148,7 @@ class MenuTabs extends Component{
               return(
                 <div>
                   <Menu fixed="top" size="mini">
-                    <TopHeader handleFilteredItems={this.handleFilteredItems}/><MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/></Menu><br/><br/><br/><br/><br/>
+                    <TopHeader handleFilteredItems={this.handleFilteredItems} barSize={this.state.barSize}/><MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/></Menu><br/><br/><br/><br/><br/>
                   <Card.Group centered itemsPerRow={this.state.itemPerRow}>
                     {this.state.beverageMenuItems.map(beverage =>{
                       return   <ItemCard key={beverage.id} name={beverage.name} price={beverage.price} img_url={beverage.img_url} description={beverage.description} handleAddToCart={this.handleAddToCart} itemName={beverage.id} />
@@ -149,7 +158,7 @@ class MenuTabs extends Component{
               return(
                 <div>
                   <Menu fixed="top" size="mini">
-                    <TopHeader handleFilteredItems={this.handleFilteredItems}/><MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/></Menu><br/><br/><br/><br/><br/>
+                    <TopHeader handleFilteredItems={this.handleFilteredItems} barSize={this.state.barSize}/><MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/></Menu><br/><br/><br/><br/><br/>
                   <Card.Group centered itemsPerRow={this.state.itemPerRow}>
                     {this.state.pizzaMenuItems.map(pizza =>{
                       return <ItemCard key={pizza.id} name={pizza.name} price={pizza.price} img_url={pizza.img_url} description={pizza.description} handleAddToCart={this.handleAddToCart} itemName={pizza.id}/>
@@ -159,7 +168,7 @@ class MenuTabs extends Component{
         return(
           <div id='cartDiv'>
             <Menu fixed="top" size="mini">
-              <TopHeader handleFilteredItems={this.handleFilteredItems}/><MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/></Menu><br/><br/><br/><br/><br/>
+              <TopHeader handleFilteredItems={this.handleFilteredItems} barSize={this.state.barSize}/><MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/></Menu><br/><br/><br/><br/><br/>
             <Card.Group centered itemsPerRow={2}>
               {this.state.cartListItems.map((item, index)=>{
                 return <OrderCard key={index} itemName={item.name} price={item.price} img_url={item.img_url} handleRemoveItem={this.handleRemoveItem} index={index}/>})}
@@ -188,7 +197,7 @@ class MenuTabs extends Component{
           return(
             <div className="mainPageDiv">
               <Menu fixed="top" size="mini">
-                <TopHeader handleFilteredItems={this.handleFilteredItems}/><MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/></Menu><br/><br/><br/><br/><br/>
+                <TopHeader handleFilteredItems={this.handleFilteredItems} barSize={this.state.barSize}/><MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/></Menu><br/><br/><br/><br/><br/>
               <p id='mainParagraph'>Click on the tray below to start!</p>
               <RevealPizza handleFilteredItems={this.handleFilteredItems}/>
             </div>
@@ -198,7 +207,7 @@ class MenuTabs extends Component{
           return(
             <div className="mainPageDiv">
               <Menu fixed="top" size="mini">
-                <TopHeader handleFilteredItems={this.handleFilteredItems}/><MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/></Menu><br/><br/><br/><br/><br/>
+                <TopHeader handleFilteredItems={this.handleFilteredItems} barSize={this.state.barSize}/><MenuButtons handleFilteredItems={this.handleFilteredItems} itemCount={this.state.cartListItems.length}/></Menu><br/><br/><br/><br/><br/>
               <p id='mainParagraph'>Click on the tray below to start!</p>
               <RevealPizza handleFilteredItems={this.handleFilteredItems}/>
             </div>

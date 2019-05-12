@@ -5,7 +5,7 @@ import DropDownMenu from './DropDownMenu';
 const TopHeader = (props) => (
   <div id='myHeader'>
     <Header  >
-      <DropDownMenu handleFilteredItems={props.handleFilteredItems}/>
+      <DropDownMenu handleFilteredItems={props.handleFilteredItems} barSize={props.barSize}/>
     </Header>
   </div>
 )

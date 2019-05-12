@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "9ba0b52336f0c966e25d3c22dd04f68b",
+    "revision": "a99bf0ba5b4c195cfabb5f414cca31f8",
     "url": "/frontend_customers_metro_pizza/index.html"
   },
   {

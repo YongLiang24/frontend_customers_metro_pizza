@@ -1,4 +1,4 @@
-## Demo: https://yongliang24.github.io/frontend_customers_metro_pizza/
+### Try demo at https://yongliang24.github.io/frontend_customers_metro_pizza/
 
 Backend API Repo: https://github.com/YongLiang24/backend_metro_pizza
 
